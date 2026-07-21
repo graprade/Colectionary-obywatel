@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Kod QR - mObywatel 2.0</title>
+  
+  <!-- Skrypt generujący kod QR -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+  <style>
+    @font-face {
+        font-family: Roboto;
+        font-style: normal;
+        font-weight: 400;
+        src: url(fonts/roboto_medium.ttf) format("truetype");
+    }
+
+    :root {
+        --blue-active: #064792;
+        --bg-color: #f5f6fb;
+        --text-dark: #131419;
+        --text-muted: #6c757d;
+    }
+
+    * {
+        user-select: none;
+        -webkit-user-select: none;
+        box-sizing: border-box;
+    }
+
+    body, html {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        font-family: Roboto, -apple-system, BlinkMacSystemFont, sans-serif;
+        background: var(--bg-color);
+        color: var(--text-dark);
+    }
+
+    .app-container {
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        padding: 15px 20px 100px 20px;
+    }
+
+    /* GÓRNY PASEK NAWIGACJI */
+    .top-bar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 10px 0;
+        position: relative;
+    }
+
+    .back-btn {
+        display: flex;
+        align-items: center;
+        color: #1a73e8;
+        font-size: 0.95em;
+        font-weight: 500;
+        cursor: pointer;
+        text-decoration: none;
+    }
+
+    .back-btn svg {
+        margin-right: 4px;
+        fill: #1a73e8;
+    }
+
+    .top-title {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: 1.05em;
+        font-weight: 600;
+        color: #000;
+    }
+
+    /* TREŚĆ NAGŁÓWKA */
+    .header-text {
+        text-align: center;
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+
+    .header-text h2 {
+        font-size: 1.35em;
+        font-weight: 700;
+        margin: 0 0 10px 0;
+        line-height: 1.25;
+        color: #111;
+        padding: 0 10px;
+    }
+
+    .header-text p {
+        font-size: 0.88em;
+        color: var(--text-muted);
+        margin: 0;
+        line-height: 1.4;
+        padding: 0 15px;
+    }
+
+    /* KARTA KODU QR */
+    .qr-card {
+        background: #ffffff;
+        border-radius: 18px;
+        padding: 25px 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
+    }
+
+    #qrcode {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 10px;
+    }
+
+    #qrcode img {
+        display: block;
+    }
+
+    .code-number {
+        font-size: 2.2em;
+        font-weight: 600;
+        letter-spacing: 4px;
+        margin: 15px 0 25px 0;
+        color: #111;
+    }
+
+    /* PASEK POSTĘPU (PROGRESS BAR) */
+    .progress-container {
+        width: 88%;
+        height: 3px;
+        background-color: #f0f0f0;
+        border-radius: 2px;
+        overflow: hidden;
+        margin-bottom: 15px;
+    }
+
+    .progress-bar {
+        height: 100%;
+        width: 100%;
+        background-color: #1e5299;
+        transition: width 1s linear;
+    }
+
+    .timer-text {
+        font-size: 0.85em;
+        color: var(--text-muted);
+    }
+
+    .timer-text span {
+        font-weight: 700;
+        color: #111;
+    }
+
+    /* DOLNA NAWIGACJA */
+    .BottomNav_bottomNav__JQdpA {
+        width: 100%;
+        height: 85px;
+        position: fixed;
+        bottom: 0;
+        background-color: #f5f6fb;
+        border-top: 1px solid #e0e0e0;
+        z-index: 99;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        left: 0;
+    }
+
+    .BottomNav_bnTab__WzkWH {
+        width: 20%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        padding-top: 10px;
+        cursor: pointer;
+    }
+
+    .BottomNav_bnTab__WzkWH img {
+        height: 22px;
+        margin-bottom: 4px;
+    }
+
+    .BottomNav_bnTab__WzkWH span {
+        font-size: 0.68em;
+        color: #555;
+    }
+
+    .BottomNav_activeText__6iAIF {
+        color: var(--blue-active) !important;
+        font-weight: 500;
+    }
+  </style>
+</head>
+<body>
+
+<div class="app-container">
+    <!-- GÓRNY PASEK -->
+    <div class="top-bar">
+        <a class="back-btn" onclick="window.location.href='qr.html'">
+            <svg width="10" height="16" viewBox="0 0 8 14" fill="none">
+                <path d="M7 1L1 7L7 13" stroke="#1a73e8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            Kod QR
+        </a>
+        <div class="top-title">Kod QR</div>
+    </div>
+
+    <!-- TEKSTY INFORMACYJNE -->
+    <div class="header-text">
+        <h2>Pokaż kod QR osobie, której dokument sprawdzasz</h2>
+        <p>Gdy ta osoba zeskanuje lub przepisze kod, zobaczysz jej dane na swoim telefonie.</p>
+    </div>
+
+    <!-- BIAŁA KARTA Z KODEM QR -->
+    <div class="qr-card">
+        <div id="qrcode"></div>
+        <div class="code-number" id="codeDisplay">234567</div>
+
+        <div class="progress-container">
+            <div class="progress-bar" id="progressBar"></div>
+        </div>
+
+        <div class="timer-text">
+            Kod wygaśnie za: <span id="timerDisplay">2 min 30 sek.</span>
+        </div>
+    </div>
+</div>
+
+<!-- DOLNE MENU (PODPIĘTE POD TWOJE PLIKI) -->
+<div class="BottomNav_bottomNav__JQdpA">
+    <div class="BottomNav_bnTab__WzkWH" onclick="window.location.href='home.html'">
+        <img src="images/ab001_home.svg" alt="home">
+        <span>Pulpit</span>
+    </div>
+    <div class="BottomNav_bnTab__WzkWH" onclick="window.location.href='documents.html'">
+        <img src="images/ad005_framed_person.svg" alt="documents">
+        <span>Dokumenty</span>
+    </div>
+    <div class="BottomNav_bnTab__WzkWH" onclick="window.location.href='services.html'">
+        <img src="images/ac001_services.svg" alt="services">
+        <span>Usługi</span>
+    </div>
+    <div class="BottomNav_bnTab__WzkWH" onclick="window.location.href='qr.html'">
+        <img src="images/b003_scanner_qr.svg" alt="qr">
+        <span class="BottomNav_activeText__6iAIF">Kod QR</span>
+    </div>
+    <div class="BottomNav_bnTab__WzkWH" onclick="window.location.href='more.html'">
+        <img src="images/ab010_more.svg" alt="more">
+        <span>Więcej</span>
+    </div>
+</div>
+
+<script>
+  const TOTAL_TIME = 150; // 2 minuty i 30 sekund = 150 sekund
+  let timeLeft = TOTAL_TIME;
+  let timerInterval = null;
+
+  // Funkcja losująca 6-cyfrowy kod numeryczny (jak w oryginalnej aplikacji)
+  function generateRandomCode() {
+    return Math.floor(100000 + Math.random() * 900000).toString();
+  }
+
+  function generateNewQR() {
+    const qrContainer = document.getElementById("qrcode");
+    qrContainer.innerHTML = "";
+
+    // Losowy 6-cyfrowy kod do wyświetlenia pod kodem QR
+    const randomNumCode = generateRandomCode();
+    document.getElementById("codeDisplay").innerText = randomNumCode;
+
+    // Unikalny token dla QR
+    const uniqueToken = "session_" + Date.now() + "_" + Math.random().toString(36).substring(2, 7);
+
+    // ADRES DO STRONY Z DANYMI
+    const baseUrl = window.location.href.substring(0, window.location.href.lastIndexOf('/'));
+    const targetUrl = `${baseUrl}/verify.html?code=${randomNumCode}&token=${uniqueToken}`;
+    // Generowanie obrazka QR
+    new QRCode(qrContainer, {
+      text: targetUrl,
+      width: 210,
+      height: 210,
+      correctLevel : QRCode.CorrectLevel.M
+    });
+
+    timeLeft = TOTAL_TIME;
+    updateUI();
+    startTimer();
+  }
+
+  function updateUI() {
+    // Formatowanie pozostałego czasu na: X min YY sek.
+    const minutes = Math.floor(timeLeft / 60);
+    const seconds = timeLeft % 60;
+    
+    let secondsStr = seconds < 10 ? "0" + seconds : seconds;
+    document.getElementById("timerDisplay").innerText = `${minutes} min ${secondsStr} sek.`;
+
+    // Aktualizacja paska postępu
+    const progressPercent = (timeLeft / TOTAL_TIME) * 100;
+    document.getElementById("progressBar").style.width = progressPercent + "%";
+  }
+
+  function startTimer() {
+    clearInterval(timerInterval);
+    timerInterval = setInterval(() => {
+      timeLeft--;
+      updateUI();
+
+      if (timeLeft <= 0) {
+        generateNewQR(); // Po upływie czasu wygeneruj nowy kod i zresetuj odliczanie
+      }
+    }, 1000);
+  }
+
+  // Uruchomienie generowania przy załadowaniu pliku
+  generateNewQR();
+</script>
+
+</body>
+</html>

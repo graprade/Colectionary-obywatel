@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Potwierdzenie danych - mObywatel 2.0</title>
+  <style>
+    @font-face {
+        font-family: Roboto;
+        font-style: normal;
+        font-weight: 400;
+        src: url(fonts/roboto_medium.ttf) format("truetype");
+    }
+
+    body, html {
+        margin: 0;
+        padding: 0;
+        font-family: Roboto, -apple-system, sans-serif;
+        background: #f5f6fb;
+        color: #131419;
+    }
+
+    .container {
+        padding: 20px;
+        max-width: 450px;
+        margin: 0 auto;
+    }
+
+    .status-badge {
+        background: #e6f4ea;
+        color: #137333;
+        border: 1px solid #ceebe1;
+        border-radius: 20px;
+        padding: 8px 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 600;
+        font-size: 0.9em;
+        margin-bottom: 20px;
+    }
+
+    .status-badge svg {
+        margin-right: 8px;
+    }
+
+    .doc-card {
+        background: #ffffff;
+        border-radius: 16px;
+        padding: 20px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    }
+
+    .profile-section {
+        display: flex;
+        align-items: center;
+        margin-bottom: 20px;
+        border-bottom: 1px solid #f0f0f0;
+        padding-bottom: 15px;
+    }
+
+    .avatar {
+        width: 80px;
+        height: 100px;
+        background-color: #ddd;
+        border-radius: 8px;
+        object-fit: cover;
+        margin-right: 15px;
+    }
+
+    .profile-main h3 {
+        margin: 0 0 5px 0;
+        font-size: 1.2em;
+        font-weight: 700;
+    }
+
+    .profile-main p {
+        margin: 0;
+        color: #666;
+        font-size: 0.9em;
+    }
+
+    .info-group {
+        margin-bottom: 12px;
+    }
+
+    .info-label {
+        font-size: 0.75em;
+        color: #777;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        margin-bottom: 2px;
+    }
+
+    .info-value {
+        font-size: 0.95em;
+        font-weight: 600;
+        color: #111;
+    }
+
+    .footer-note {
+        text-align: center;
+        margin-top: 25px;
+        font-size: 0.8em;
+        color: #888;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- STATUS POTWIERDZENIA -->
+    <div class="status-badge">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <polyline points="20 6 9 17 4 12"></polyline>
+        </svg>
+        Dane zostały potwierdzone
+    </div>
+
+    <!-- KARTA Z DANYMI DOKUMENTU -->
+    <div class="doc-card">
+        <div class="profile-section">
+            <img class="avatar" src="images/cd001_person_placeholder.jpg" alt="Zdjęcie" onerror="this.src='https://via.placeholder.com/80x100?text=Foto'">
+            <div class="profile-main">
+                <h3 id="userName">JAN</h3>
+                <h3 id="userSurname">KOWALSKI</h3>
+                <p id="userRole">Legitymacja Studencka</p>
+            </div>
+        </div>
+
+        <div class="info-group">
+            <div class="info-label">Numer albumu / indeksu</div>
+            <div class="info-value" id="userIndex">123456</div>
+        </div>
+
+        <div class="info-group">
+            <div class="info-label">PESEL</div>
+            <div class="info-value">01234567890</div>
+        </div>
+
+        <div class="info-group">
+            <div class="info-label">Uczelnia</div>
+            <div class="info-value">Politechnika / Uniwersytet</div>
+        </div>
+
+        <div class="info-group">
+            <div class="info-label">Status dokumentu</div>
+            <div class="info-value" style="color: #137333;">Ważny</div>
+        </div>
+    </div>
+
+    <div class="footer-note">
+        Czas weryfikacji: <span id="timeNow"></span><br>
+        Rzeczpospolita Polska – mObywatel 2.0
+    </div>
+</div>
+
+<script>
+    // Wyświetlanie aktualnej godziny skanowania
+    document.getElementById("timeNow").innerText = new Date().toLocaleString('pl-PL');
+</script>
+
+</body>
+</html>
