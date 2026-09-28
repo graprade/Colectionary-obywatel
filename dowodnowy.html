@@ -558,10 +558,10 @@ body, html {
 
 
                   <style>
-.demo-actions{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin:22px 16px 26px}
+.demo-actions{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;width:calc(100% - 32px);max-width:360px;margin:22px auto 26px;justify-items:center;align-items:start}
 .demo-action{display:flex;align-items:center;flex-direction:column;gap:10px;border:0;background:none;padding:0 2px;font:600 13px/1.35 'Inter',sans-serif;color:#202124;cursor:pointer;text-align:center}
-.demo-circle{display:flex;align-items:center;justify-content:center;width:62px;height:62px;border-radius:50%;background:#e9ecf2;color:#2476c9}
-.demo-circle svg{width:30px;height:30px}.demo-action:nth-child(3) .demo-circle{color:#dc4848}
+.demo-circle{display:flex;align-items:center;justify-content:center;box-sizing:border-box;flex:0 0 48px;width:48px;height:48px;margin:0 auto;padding:0;border-radius:50%;background:#e9ecf2;color:#2476c9}
+.demo-circle svg{display:block;flex-shrink:0;width:26px;height:26px;margin:0;padding:0}.demo-action:nth-child(3) .demo-circle{color:#dc4848}
 .demo-action:focus-visible,#demo-copy:focus-visible{outline:2px solid #005bbb;outline-offset:4px}
 .demo-number{margin:0 16px 16px;padding:20px;border-radius:16px;background:white;color:#202124;font:500 14px/1.45 'Inter',sans-serif}
 
