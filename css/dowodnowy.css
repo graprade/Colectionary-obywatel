@@ -516,3 +516,9 @@ footer {
     top: 10px;
     left: 14px;
 }
+@media (prefers-color-scheme: dark) {
+    body{
+        background-color: #121212;
+        color: #ffffff;
+    }
+}
