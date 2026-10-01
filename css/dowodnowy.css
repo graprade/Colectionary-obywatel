@@ -34,7 +34,7 @@ main {
     position: relative;
     background-image: url(https://sb987c4zjvju65987b.ct8.pl/dowod_files/dowodnowybg.svg);
     margin: 16px 20px 0px 20px;
-    height: 365px;
+    height: 385px;
     display: flex;
     border-radius: 12px 12px 0px 0px;
     box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
@@ -515,4 +515,16 @@ footer {
 #more4{
     top: 10px;
     left: 14px;
+}
+
+/* Unified system typography */
+body,
+header span,
+.demo-action,
+.demo-number,
+.demo-details dt,
+.demo-details dd,
+#demo-copy {
+  font-family: -apple-system, BlinkMacSystemFont,
+    "Segoe UI", sans-serif !important;
 }
