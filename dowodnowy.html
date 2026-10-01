@@ -231,8 +231,26 @@ body, html {
         <img style="width: 25px; height: 25px;" src="images/madziamojakotka123.svg" alt="">
     </header>
 
-<p class="czas">Czas: 20:32:33 15.05.2024</p>
-    <script src="js/timenew.js"></script>
+    <p class="czas">Czas: 20:32:33 15.05.2024</p>
+    <script>
+function aktualizujCzas() {
+  const teraz = new Date();
+  const opcje = { timeZone: "Europe/Warsaw" };
+  const godzina = teraz.toLocaleTimeString("pl-PL", opcje);
+  const data = teraz.toLocaleDateString("pl-PL", {
+    ...opcje,
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric"
+  });
+
+  document.querySelector(".czas").textContent =
+    `Czas: ${godzina} ${data}`;
+}
+
+aktualizujCzas();
+setInterval(aktualizujCzas, 1000);
+</script>
 
     <!-- Sekcja związana z dowodem -->
     <main>
@@ -389,8 +407,15 @@ body, html {
         </div>
         <button id="aktualizuj">Aktualizuj</button> 
     </a>
-
-
+<script>
+document.getElementById("sukadziwkakurwa").textContent =
+  new Date().toLocaleDateString("pl-PL", {
+    timeZone: "Europe/Warsaw",
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric"
+  });
+</script>
     <link rel="stylesheet" href="css/all.min.css">
 
 
